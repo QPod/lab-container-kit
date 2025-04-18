@@ -1,0 +1,57 @@
+# Ref: https://github.com/AliyunContainerService/image-syncer/blob/master/README-zh_CN.md
+
+# Elasticserach
+#  - ref1: https://github.com/elastic/elasticsearch/releases
+#  - ref2: https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-with-docker
+docker.elastic.co/elasticsearch/elasticsearch:7.17.28,8.17.5,8.18.0,9.0.0:
+ - quay.io/qpod/elasticsearch
+ - registry.cn-hangzhou.aliyuncs.com/qpod/elasticsearch
+ - registry.cn-beijing.aliyuncs.com/qpod/elasticsearch
+
+
+# Minio
+# - ref1: https://github.com/minio/minio/releases
+# - ref2: https://min.io/docs/minio/container/index.html
+docker.io/minio/minio:latest,RELEASE.2023-12-20T01-00-02Z,RELEASE.2025-04-08T15-41-24Z:
+ - quay.io/qpod/minio
+ - registry.cn-hangzhou.aliyuncs.com/qpod/minio
+ - registry.cn-beijing.aliyuncs.com/qpod/minio
+
+
+# valkey
+# - ref1: https://github.com/valkey-io/valkey/releases
+# - ref2: https://hub.docker.com/r/valkey/valkey
+docker.io/valkey/valkey:latest,8,8.1,8.1.0:
+ - quay.io/qpod/valkey
+ - registry.cn-hangzhou.aliyuncs.com/qpod/valkey
+ - registry.cn-beijing.aliyuncs.com/qpod/valkey
+
+
+# k3s
+# - ref1: https://github.com/k3s-io/k3s/releases
+# - ref2: https://docs.k3s.io/installation/airgap
+rancher/k3s:latest,v1.32.3-k3s1:
+ - quay.io/qpod/k3s
+ - registry.cn-hangzhou.aliyuncs.com/qpod/k3s
+ - registry.cn-beijing.aliyuncs.com/qpod/k3s
+
+
+# k3d: https://github.com/k3d-io/k3d/pkgs/container/k3d
+ghcr.io/k3d-io/k3d:latest,5-dind,5:
+ - quay.io/qpod/k3s
+ - registry.cn-hangzhou.aliyuncs.com/qpod/k3d
+ - registry.cn-beijing.aliyuncs.com/qpod/k3d
+
+
+# k3d-proxy:https://github.com/k3d-io/k3d/pkgs/container/k3d-proxy
+ghcr.io/k3d-io/k3d-proxy:latest,5:
+ - quay.io/qpod/k3s
+ - registry.cn-hangzhou.aliyuncs.com/qpod/k3d-proxy
+ - registry.cn-beijing.aliyuncs.com/qpod/k3d-proxy
+
+
+# k3d-tools: https://github.com/k3d-io/k3d/pkgs/container/k3d-tools
+ghcr.io/k3d-io/k3d-tools:latest,5:
+ - quay.io/qpod/k3s
+ - registry.cn-hangzhou.aliyuncs.com/qpod/k3d-tools
+ - registry.cn-beijing.aliyuncs.com/qpod/k3d-tools
