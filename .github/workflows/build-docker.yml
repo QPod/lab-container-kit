@@ -40,4 +40,4 @@ jobs:
           printf '%s' "$AUTH_FILE_CONTENT" > .github/workflows/auth.json && ls -alh ./.github/workflows
           printenv | grep -v 'PATH' > /tmp/docker.env && echo "REGISTRY_URL=${REGISTRY_DST}" >> /tmp/docker.env
           docker run --rm --env-file /tmp/docker.env -v $(pwd):/tmp -w /tmp ${IMG_PREFIX_DST:-qpod}/docker-kit \
-            image-syncer
+            image-syncer --proc=8 --retries=2 --images ./images.yaml --auth /tmp/.github/workflows/auth.json

@@ -4,6 +4,8 @@ This task sync docker images from source registries to target registries based o
 
 ```shell
 docker run -it --rm -v $(pwd):/root/app -w /root/app docker.io/qpod/docker-kit
+
+image-syncer --proc=8 --retries=2 --images ./images.yaml --auth ./auth.json
 ```
 
 To sync images in batch, two config files (or combine them in one as `--config`) are needed.
