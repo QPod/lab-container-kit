@@ -3,7 +3,7 @@
 # Elasticserach
 #  - ref1: https://github.com/elastic/elasticsearch/releases
 #  - ref2: https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-with-docker
-docker.elastic.co/elasticsearch/elasticsearch:7.17.28,8.17.5,8.18.0,9.0.0:
+docker.elastic.co/elasticsearch/elasticsearch:7.17.28,8.11.3,8.17.5,8.18.0,9.0.0:
  - quay.io/qpod/elasticsearch
  - registry.cn-hangzhou.aliyuncs.com/qpod/elasticsearch
  - registry.cn-beijing.aliyuncs.com/qpod/elasticsearch
