@@ -10,4 +10,6 @@ docker run -d \
     --tmpfs /run/lock \
     -v /sys/fs/cgroup:/sys/fs/cgroup \
     ubuntu-systemd
-    
+
+
+INSTALL_K3S_SKIP_DOWNLOAD=true ./install_k3s.sh --disable=traefik,servicelb --write-kubeconfig-mode 644
