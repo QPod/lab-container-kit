@@ -8,7 +8,7 @@ setup_k3d() {
   && curl -L -o /opt/k3s/install_k3d.sh https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh \
   && chmod +x /opt/k3s/*k3d* && ln -sf /opt/k3s/k3d /usr/local/bin/
 
-  k3d version
+  k3d --version
 }
 
 setup_k3s() {
@@ -21,7 +21,7 @@ setup_k3s() {
   && curl -L -o /opt/k3s/install_k3s.sh https://get.k3s.io \
   && chmod +x /opt/k3s/*k3s* && ln -sf /opt/k3s/k3s /usr/local/bin/
 
-  k3s version
+  k3s --version
 }
 
 setup_k3s_pack() {
