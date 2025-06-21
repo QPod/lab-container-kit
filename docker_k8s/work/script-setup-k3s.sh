@@ -28,7 +28,7 @@ setup_k3s_pack() {
   # Download k3s image for offline-mode installation
      VER_K3S=$(curl -sL https://github.com/k3s-io/k3s/releases.atom | grep 'releases/tag/v' | grep -v 'rc' | head -1 | grep -Po '\d[\d.]+' ) \
   && URL_K3S_IMGS="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s-airgap-images-amd64.tar.zst" \
-  && curl -L -o ./k3s-airgap-images-amd64.tar.zst $URL_K3S_IMGS
+  && curl -L -o /opt/k3s/k3s-airgap-images-amd64.tar.zst $URL_K3S_IMGS
   # zstd -cd ./k3s-airgap-images-amd64.tar.zst | docker load
   # INSTALL_K3S_SKIP_DOWNLOAD=true ./install_k3s.sh
 }
