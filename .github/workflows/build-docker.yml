@@ -34,8 +34,8 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           source ./tool.sh
-          build_image k3s-ctk latest docker_k3s/Dockerfile && push_image
-          build_image k0s-ctk latest docker_k0s/Dockerfile && push_image
+          build_image k3s-ctk latest docker_k3s/k3s-ctk.Dockerfile && push_image
+          build_image k0s-ctk latest docker_k3s/k0s-ctk.Dockerfile && push_image
 
   ## Sync all images in this build (listed by "names") to mirror registry.
   sync_images:
