@@ -27,6 +27,16 @@ env:
   DOCKER_MIRROR_REGISTRY_PASSWORD: ${{ secrets.DOCKER_MIRROR_REGISTRY_PASSWORD }}
 
 jobs:
+  qpod_k3s-ctk:
+    name: 'k3s-ctk,k0s-ctk'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          source ./tool.sh
+          build_image k3s-ctk latest docker_k3s/Dockerfile && push_image
+          build_image k0s-ctk latest docker_k0s/Dockerfile && push_image
+
   ## Sync all images in this build (listed by "names") to mirror registry.
   sync_images:
     needs: []
