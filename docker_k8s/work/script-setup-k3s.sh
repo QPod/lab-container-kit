@@ -5,8 +5,8 @@ setup_k3s() {
   && URL_K3S="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s" \
   && echo "Downloading k3s version ${VER_K3S} from: ${URL_K3S}" \
   && mkdir -pv /opt/k3s && curl -L -o /opt/k3s/k3s $URL_K3S \
-  && chmod +x /opt/k3s/*k3s* && ln -sf /opt/k3s/k3s /usr/local/bin/
-  k3s --version
+  && chmod +x /opt/k3s/*k3s*
+  /opt/k3s/k3s --version
 }
 
 setup_cri_dockerd() {
@@ -17,8 +17,8 @@ setup_cri_dockerd() {
   && echo "Downloading cri-dockerd version ${VER_CRI_DOCKERD} from: ${URL_CRI_DOCKERD}" \
   && mkdir -pv /opt/k3s && curl -L -o /tmp/cri-dockerd.tgz $URL_CRI_DOCKERD \
   && tar -xzvf /tmp/cri-dockerd.tgz -C /opt/k3s/ --strip-components=1 cri-dockerd/cri-dockerd \
-  && chmod +x /opt/k3s/cri-dockerd && ln -sf /opt/k3s/cri-dockerd /usr/local/bin/
-  cri-dockerd --version
+  && chmod +x /opt/k3s/cri-dockerd
+  /opt/k3s/cri-dockerd --version
 }
 
 

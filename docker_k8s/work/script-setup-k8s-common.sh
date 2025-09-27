@@ -18,7 +18,8 @@ setup_kubectl() {
   && echo "Downloading kubectl version ${VER_KUBECTL} from: ${URL_KUBECTL}" \
   && mkdir -pv /opt/k8s \
   && curl -L -o /opt/k8s/kubectl $URL_KUBECTL \
-  && chmod +x /opt/k8s/kubectl && ln -sf /opt/k8s/kubectl /usr/local/bin/
+  && chmod +x /opt/k8s/kubectl
+  kubectl version --client
 }
 
 setup_helm() {
@@ -29,6 +30,6 @@ setup_helm() {
   && curl -L -s -o /tmp/helm.tar.gz "${URL_HELM}" \
   && mkdir -pv /opt/k8s \
   && tar -zxvf /tmp/helm.tar.gz -C /opt/k8s/ --strip-components=1 "linux-${ARCH}/helm" \
-  && chmod +x /opt/k8s/helm && ln -sf /opt/k8s/helm /usr/local/bin/
+  && chmod +x /opt/k8s/helm
   helm version
 }

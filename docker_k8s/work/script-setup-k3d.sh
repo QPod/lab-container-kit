@@ -6,7 +6,7 @@ setup_k3d() {
   && echo "Downloading k3d version ${VER_K3D} from: ${URL_K3D}" \
   && mkdir -pv /opt/k3s && curl -L -o /opt/k3s/k3d $URL_K3D \
   && curl -L -o /opt/k3s/install_k3d.sh https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh \
-  && chmod +x /opt/k3s/*k3d* && ln -sf /opt/k3s/k3d /usr/local/bin/
+  && chmod +x /opt/k3s/*k3d*
 
   k3d --version
 }

@@ -6,7 +6,6 @@ setup_k0s() {
   mkdir -pv /opt/k0s
   curl -L -o /opt/k0s/k0s ${URL_K0S}
   chmod +x /opt/k0s/k0s
-  ln -sf /opt/k0s/k0s /usr/local/bin/
   k0s version
 }
 

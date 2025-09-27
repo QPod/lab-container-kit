@@ -28,7 +28,7 @@ env:
 
 jobs:
   job-k3s-ctk:
-    name: 'k3s-ctk,k0s-ctk'
+    name: 'k3s-ctk'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
           build_image k3s-ctk latest docker_k8s/k3s-ctk.Dockerfile && push_image
 
   job-k0s-ctk:
-    name: 'k3s-ctk,k0s-ctk'
+    name: 'k0s-ctk'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
