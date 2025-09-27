@@ -13,7 +13,7 @@ setup_cri_dockerd() {
   ARCH="amd64"
   #  Install the latest release: https://mirantis.github.io/cri-dockerd/usage/install-manually/
      VER_CRI_DOCKERD=$(curl -sL https://github.com/Mirantis/cri-dockerd/releases.atom | grep 'releases/tag/v' | grep -v 'rc' | head -1 | grep -Po '\d[\d.]+' ) \
-  && URL_CRI_DOCKERD="https://github.com/Mirantis/cri-dockerd/releases/download/v$VER_CRI_DOCKERD/cri-dockerd-$VER_CRI_DOCKERD.$ARCH.tgz" \  
+  && URL_CRI_DOCKERD="https://github.com/Mirantis/cri-dockerd/releases/download/v$VER_CRI_DOCKERD/cri-dockerd-$VER_CRI_DOCKERD.$ARCH.tgz" \
   && echo "Downloading cri-dockerd version ${VER_CRI_DOCKERD} from: ${URL_CRI_DOCKERD}" \
   && mkdir -pv /opt/k3s && curl -L -o /tmp/cri-dockerd.tgz $URL_CRI_DOCKERD \
   && tar -xzvf /tmp/cri-dockerd.tgz -C /opt/k3s/ --strip-components=1 cri-dockerd/cri-dockerd \

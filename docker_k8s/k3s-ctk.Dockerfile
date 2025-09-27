@@ -8,7 +8,8 @@ LABEL maintainer="haobibo@gmail.com"
 
 COPY work /opt/utils/
 
-RUN source /opt/utils/script-setup-k8s-common.sh    && setup_kubectl && setup_helm \
+RUN set -eux \
+ && source /opt/utils/script-setup-k8s-common.sh    && setup_kubectl && setup_helm \
  && source /opt/utils/script-setup-k3s.sh           && setup_k3s && setup_cri_dockerd && setup_k3s_pack \
  && mv /opt/utils/script-setup-k3s.sh   /opt/k3s/ \
  && mv /opt/k8s/*                       /opt/k3s/ && rm -rf /opt/k8s \
