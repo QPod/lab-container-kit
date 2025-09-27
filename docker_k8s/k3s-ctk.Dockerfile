@@ -18,4 +18,4 @@ RUN source /opt/utils/script-setup-k8s-common.sh    && setup_kubectl && setup_he
 FROM docker.io/busybox
 COPY --from=runner /opt/k3s /opt/k3s
 LABEL usage="docker run --rm -it -v /opt/k3s/:/tmp/ k3s"
-CMD ["sh", "-c", "ls -alh /home && cp -rf /opt/k3s/* /tmp/"]
+CMD ["sh", "-c", "ls -alh /opt/k3s && cp -rf /opt/k3s/* /tmp/"]
