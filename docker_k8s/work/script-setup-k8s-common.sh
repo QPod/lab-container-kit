@@ -1,3 +1,15 @@
+setup_verify_arch() {
+    [ -z "$ARCH" ] && ARCH=$(uname -m)
+    case $ARCH in
+        amd64|x86_64) ARCH=amd64; SUFFIX= ;;
+        arm64|aarch64) ARCH=arm64; SUFFIX=-arm64 ;;
+        s390x) ARCH=s390x; SUFFIX=-s390x ;;
+        arm*) ARCH=arm; SUFFIX=-armhf ;;
+        *) fatal "Unsupported architecture $ARCH" ;;
+    esac
+}
+
+
 setup_kubectl() {
   ARCH="amd64"
   # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux

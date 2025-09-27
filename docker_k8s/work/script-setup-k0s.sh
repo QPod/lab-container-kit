@@ -17,13 +17,3 @@ setup_k0s_pack() {
   echo "Downloading k0s airgap images version ${VER_K0S} from ${URL_K0S_IMG}"
   curl -L -o "/opt/k0s/k0s-airgap-bundle-v${VER_K0S}+k0s.1-${ARCH}" ${URL_K0S_IMG}
 }
-
-setup_kubectl() {
-  ARCH="amd64"
-  VER_KUBECTL=$(curl -L -s https://dl.k8s.io/release/stable.txt)
-  URL_KUBECTL="https://dl.k8s.io/release/${VER_KUBECTL}/bin/linux/amd64/kubectl"
-  echo "Downloading kubectl version ${VER_KUBECTL} from: ${URL_KUBECTL}"
-  curl -L -o /opt/k0s/kubectl ${URL_KUBECTL}
-  chmod +x /opt/k0s/kubectl
-  ln -sf /opt/k0s/kubectl /usr/local/bin/
-}

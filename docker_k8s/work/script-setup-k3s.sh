@@ -1,14 +1,3 @@
-setup_verify_arch() {
-    [ -z "$ARCH" ] && ARCH=$(uname -m)
-    case $ARCH in
-        amd64|x86_64) ARCH=amd64; SUFFIX= ;;
-        arm64|aarch64) ARCH=arm64; SUFFIX=-arm64 ;;
-        s390x) ARCH=s390x; SUFFIX=-s390x ;;
-        arm*) ARCH=arm; SUFFIX=-armhf ;;
-        *) fatal "Unsupported architecture $ARCH" ;;
-    esac
-}
-
 setup_k3s() {
   ARCH="amd64"
   #  Install the latest release: https://github.com/k3d-io/k3s
@@ -95,9 +84,6 @@ EOF
 
     echo "Created: ${FILE_SOCKET} and ${FILE_SERVICE}"
 }
-
-
-
 
 
 create_systemd_service_file() {
