@@ -1,13 +1,9 @@
 # k3s Air-gap Install: https://docs.k3s.io/installation/airgap?airgap-load-images=Manually+Deploy+Images
-set -ex
-
-ARCH=$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/')
 
 setup_k3s() {
   #  Install the latest release: https://github.com/k3d-io/k3s
      VER_K3S=$(curl -sL https://github.com/k3s-io/k3s/releases.atom | grep 'releases/tag/v' | grep -v 'rc' | head -1 | grep -Po '\d[\d.]+' ) \
-  && URL_K3S="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s" \
-  && URL_K3S="${URL_K3S}$([ "$ARCH" != "amd64" ] && echo "${ARCH}")" \
+  && URL_K3S="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s${SUFFIX}" \
   && echo "Downloading k3s version ${VER_K3S} from: ${URL_K3S}" \
   && mkdir -pv /opt/k3s && curl -L -o /opt/k3s/k3s $URL_K3S \
   && chmod +x /opt/k3s/*k3s*
@@ -32,7 +28,7 @@ setup_k3s_pack() {
   && URL_K3S_IMGS="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s-airgap-images-${ARCH}.tar.zst" \
   && curl -L -o /opt/k3s/k3s-airgap-images-${ARCH}.tar.zst $URL_K3S_IMGS
   # zstd -cd ./k3s-airgap-images-${ARCH}.tar.zst | docker load
-  # INSTALL_K3S_SKIP_DOWNLOAD=true ./install_k3s.sh
+  # INSTALL_K3S_SKIP_DOWNLOAD=true ./script-get-k3s-io.sh
 }
 
 

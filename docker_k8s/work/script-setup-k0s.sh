@@ -1,7 +1,4 @@
 # k0s Air-gap Install: https://docs.k0sproject.io/head/airgap-install/
-set -ex
-
-ARCH=$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/')
 
 setup_k0s() {
      VER_K0S=$(curl -sL https://github.com/k0sproject/k0s/releases.atom | grep 'releases/tag/v' | head -1 | grep -Po '\d[\d.]+' ) \
