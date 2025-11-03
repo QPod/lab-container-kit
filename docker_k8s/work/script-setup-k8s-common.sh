@@ -1,5 +1,5 @@
 setup_verify_arch() {
-    [ -z "$ARCH" ] && ARCH=$(uname -m)
+    [ -z "${ARCH+x}" ] && ARCH=$(uname -m)
     case $ARCH in
         amd64|x86_64)  export ARCH=amd64; export SUFFIX= ;;
         arm64|aarch64) export ARCH=arm64; export SUFFIX=-arm64 ;;
