@@ -1,8 +1,13 @@
+# k3s Air-gap Install: https://docs.k3s.io/installation/airgap?airgap-load-images=Manually+Deploy+Images
+set -ex
+
+ARCH=$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/')
+
 setup_k3s() {
-  ARCH="amd64"
   #  Install the latest release: https://github.com/k3d-io/k3s
      VER_K3S=$(curl -sL https://github.com/k3s-io/k3s/releases.atom | grep 'releases/tag/v' | grep -v 'rc' | head -1 | grep -Po '\d[\d.]+' ) \
   && URL_K3S="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s" \
+  && URL_K3S="${URL_K3S}$([ "$ARCH" != "amd64" ] && echo "${ARCH}")" \
   && echo "Downloading k3s version ${VER_K3S} from: ${URL_K3S}" \
   && mkdir -pv /opt/k3s && curl -L -o /opt/k3s/k3s $URL_K3S \
   && chmod +x /opt/k3s/*k3s*
@@ -10,7 +15,6 @@ setup_k3s() {
 }
 
 setup_cri_dockerd() {
-  ARCH="amd64"
   #  Install the latest release: https://mirantis.github.io/cri-dockerd/usage/install-manually/
      VER_CRI_DOCKERD=$(curl -sL https://github.com/Mirantis/cri-dockerd/releases.atom | grep 'releases/tag/v' | grep -v 'rc' | head -1 | grep -Po '\d[\d.]+' ) \
   && URL_CRI_DOCKERD="https://github.com/Mirantis/cri-dockerd/releases/download/v$VER_CRI_DOCKERD/cri-dockerd-$VER_CRI_DOCKERD.$ARCH.tgz" \
@@ -25,9 +29,9 @@ setup_cri_dockerd() {
 setup_k3s_pack() {
   # Download k3s image for offline-mode installation
      VER_K3S=$(curl -sL https://github.com/k3s-io/k3s/releases.atom | grep 'releases/tag/v' | grep -v 'rc' | head -1 | grep -Po '\d[\d.]+' ) \
-  && URL_K3S_IMGS="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s-airgap-images-amd64.tar.zst" \
-  && curl -L -o /opt/k3s/k3s-airgap-images-amd64.tar.zst $URL_K3S_IMGS
-  # zstd -cd ./k3s-airgap-images-amd64.tar.zst | docker load
+  && URL_K3S_IMGS="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s-airgap-images-${ARCH}.tar.zst" \
+  && curl -L -o /opt/k3s/k3s-airgap-images-${ARCH}.tar.zst $URL_K3S_IMGS
+  # zstd -cd ./k3s-airgap-images-${ARCH}.tar.zst | docker load
   # INSTALL_K3S_SKIP_DOWNLOAD=true ./install_k3s.sh
 }
 
@@ -37,7 +41,9 @@ create_cri_dockerd_unit_files() {
     local FILE_SOCKET="${SYSTEMD_DIR}/cri-docker.socket"
     local FILE_SERVICE="${SYSTEMD_DIR}/cri-docker.service"
 
-    tee "${FILE_SOCKET}" >/dev/null <<'EOF'
+    echo "Creating ${FILE_SOCKET} and ${FILE_SERVICE} ..."
+
+    sudo tee "${FILE_SOCKET}" >/dev/null <<'EOF'
 [Unit]
 Description=CRI Docker Socket for the API
 PartOf=cri-docker.service
@@ -52,7 +58,7 @@ SocketGroup=docker
 WantedBy=sockets.target
 EOF
 
-    tee "${FILE_SERVICE}" >/dev/null <<'EOF'
+    sudo tee "${FILE_SERVICE}" >/dev/null <<'EOF'
 [Unit]
 Description=CRI Interface for Docker Application Container Engine
 Documentation=https://docs.mirantis.com
@@ -81,15 +87,13 @@ KillMode=process
 [Install]
 WantedBy=multi-user.target
 EOF
-
-    echo "Created: ${FILE_SOCKET} and ${FILE_SERVICE}"
 }
 
 
 create_systemd_service_file() {
     FILE_K3S_SERVICE=${FILE_K3S_SERVICE:-"/etc/systemd/system/k3s.service"}
     echo "systemd: Creating service file ${FILE_K3S_SERVICE}"
-    $SUDO tee ${FILE_K3S_SERVICE} >/dev/null << EOF
+    sudo tee ${FILE_K3S_SERVICE} >/dev/null << EOF
 [Unit]
 Description=Lightweight Kubernetes
 Documentation=https://k3s.io

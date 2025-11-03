@@ -2,8 +2,10 @@
 
 ## k3s
 
-Air-gap Install: https://docs.k3s.io/installation/airgap
+```bash
+docker run --rm -it -v /opt/k3s/:/tmp/ quay.io/labnow/k3s-ctk
+create_cri_dockerd_unit_files
+create_systemd_service_file
+```
 
 ## k0s
-
-Air-gap Install: https://docs.k0sproject.io/head/airgap-install/
