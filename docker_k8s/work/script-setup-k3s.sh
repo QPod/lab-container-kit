@@ -27,8 +27,6 @@ setup_k3s_pack() {
      VER_K3S=$(curl -sL https://github.com/k3s-io/k3s/releases.atom | grep 'releases/tag/v' | grep -v 'rc' | head -1 | grep -Po '\d[\d.]+' ) \
   && URL_K3S_IMGS="https://github.com/k3s-io/k3s/releases/download/v$VER_K3S%2Bk3s1/k3s-airgap-images-${ARCH}.tar.zst" \
   && curl -L -o /opt/k3s/k3s-airgap-images-${ARCH}.tar.zst $URL_K3S_IMGS
-  # zstd -cd ./k3s-airgap-images-${ARCH}.tar.zst | docker load
-  # INSTALL_K3S_SKIP_DOWNLOAD=true ./script-get-k3s-io.sh
 }
 
 
@@ -82,42 +80,5 @@ KillMode=process
 
 [Install]
 WantedBy=multi-user.target
-EOF
-}
-
-
-create_systemd_service_file() {
-    FILE_K3S_SERVICE=${FILE_K3S_SERVICE:-"/etc/systemd/system/k3s.service"}
-    echo "systemd: Creating service file ${FILE_K3S_SERVICE}"
-    sudo tee ${FILE_K3S_SERVICE} >/dev/null << EOF
-[Unit]
-Description=Lightweight Kubernetes
-Documentation=https://k3s.io
-Wants=network-online.target
-After=network-online.target
-
-[Install]
-WantedBy=multi-user.target
-
-[Service]
-Type=${SYSTEMD_TYPE:="notify"}
-EnvironmentFile=-/etc/default/%N
-EnvironmentFile=-/etc/sysconfig/%N
-EnvironmentFile=-${FILE_K3S_ENV:-"/opt/k3s/k3s.service.env"}
-KillMode=process
-Delegate=yes
-User=root
-# Having non-zero Limit*s causes performance problems due to accounting overhead
-# in the kernel. We recommend using cgroups to do container-local accounting.
-LimitNOFILE=1048576
-LimitNPROC=infinity
-LimitCORE=infinity
-TasksMax=infinity
-TimeoutStartSec=0
-Restart=always
-RestartSec=5s
-ExecStartPre=-/sbin/modprobe br_netfilter
-ExecStartPre=-/sbin/modprobe overlay
-ExecStart=${BIN_DIR:-"/opt/k3s"}/k3s ${CMD_K3S_EXEC:-"server"} ${CMD_K3S_EXTRA_ARGS:="--docker --disable-traefik"}
 EOF
 }
