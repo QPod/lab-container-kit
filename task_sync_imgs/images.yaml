@@ -62,3 +62,9 @@ ghcr.io/k3d-io/k3d-tools:latest,5:
  - quay.io/labnow/k3s
  - registry.cn-hangzhou.aliyuncs.com/labnow/k3d-tools
  - registry.cn-beijing.aliyuncs.com/labnow/k3d-tools
+
+# kube-scheduler
+registry.k8s.io/kube-scheduler:/v\d+\.\d+\.\d+/:
+ - quay.io/labnow/kube-scheduler
+ - registry.cn-hangzhou.aliyuncs.com/labnow/kube-scheduler
+ - registry.cn-beijing.aliyuncs.com/labnow/kube-scheduler
