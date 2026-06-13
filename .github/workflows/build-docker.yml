@@ -30,7 +30,7 @@ jobs:
     name: 'k3s-ctk'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: |
           source ./tool.sh
           build_image k3s-ctk latest docker_k8s/k3s-ctk.Dockerfile && push_image
@@ -39,7 +39,7 @@ jobs:
     name: 'k0s-ctk'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: |
           source ./tool.sh
           build_image k0s-ctk latest docker_k8s/k0s-ctk.Dockerfile && push_image
@@ -47,10 +47,10 @@ jobs:
 
   ## Sync all images in this build (listed by "names") to mirror registry.
   sync_images:
-    needs: []
+    needs: ["job-k3s-ctk", "job-k0s-ctk"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - env:
           AUTH_FILE_CONTENT: ${{ secrets.AUTH_FILE_CONTENT }}
         run: |
