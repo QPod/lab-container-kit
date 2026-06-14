@@ -9,11 +9,12 @@ LABEL maintainer="haobibo@gmail.com"
 COPY work /opt/utils/
 
 RUN set -eux && chmod +x /opt/utils/*.sh \
- && source /opt/utils/script-setup-k8s-common.sh    && setup_verify_arch && setup_kubectl && setup_helm \
- && source /opt/utils/script-setup-k0s.sh           && setup_k0s  && setup_k0s_pack \
+ && source /opt/utils/script-setup-k8s-common.sh && setup_verify_arch && setup_kubectl && setup_helm && setup_k9s \
+ && source /opt/utils/script-setup-k0s.sh        && setup_k0s && setup_k0s_pack \
+ && mv /opt/k8s/*                       /opt/k0s/ \
  && mv /opt/utils/script-setup-k0s.sh   /opt/k0s/ \
- && mv /opt/k8s/*                       /opt/k0s/ && rm -rf /opt/k8s \
- && ls -alh /opt/*
+ 
+ && rm -rf /opt/k8s && ls -alh /opt/*
 
 
 FROM docker.io/busybox
